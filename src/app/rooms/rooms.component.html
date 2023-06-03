@@ -28,7 +28,7 @@
         >
           <td>{{ e ? "Even" : "Odd" }}</td>
           <td>{{ item.roomNumber }}</td>
-          <td>{{ item.roomType }}</td>
+          <td>{{ item.roomType | uppercase }}</td>
           <td>{{ item.amenties }}</td>
           <td>{{ item.price }}</td>
           <td>{{ item.checkIn | date }}</td>
