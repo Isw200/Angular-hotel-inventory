@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Rooms } from './Rooms';
+import { RoomList, Rooms } from './Rooms';
 
 @Component({
   selector: 'hinv-rooms',
@@ -15,7 +15,39 @@ export class RoomsComponent {
     reservedRooms: 2,
   };
 
+  roomList: RoomList[] = [
+    {
+      roomNumber: 1,
+      roomType: 'Single',
+      amenties: 'TV, AC, WiFi',
+      price: 100,
+      photos: 'https://picsum.photos/200/300',
+      checkIn: new Date(),
+      checkOut: new Date(),
+    },
+    {
+      roomNumber: 2,
+      roomType: 'Double',
+      amenties: 'TV, AC, WiFi',
+      price: 200,
+      photos: 'https://picsum.photos/200/300',
+      checkIn: new Date(),
+      checkOut: new Date(),
+    },
+    {
+      roomNumber: 3,
+      roomType: 'Suite',
+      amenties: 'TV, AC, WiFi',
+      price: 300,
+      photos: 'https://picsum.photos/200/300',
+      checkIn: new Date(),
+      checkOut: new Date(),
+    },
+  ];
+
   hideRooms = false;
+
+  role = 'admin';
 
   constructor() {}
 
@@ -23,8 +55,28 @@ export class RoomsComponent {
     this.hideRooms = !this.hideRooms;
   }
 
-  book() {
-    this.rooms.availableRooms--;
-    this.rooms.reservedRooms++;
+  addRoom() {
+    const randomRoom: RoomList = {
+      roomNumber: Math.floor(Math.random() * 100),
+      roomType: 'Single',
+      amenties: 'TV, AC, WiFi',
+      price: 100,
+      photos: 'https://picsum.photos/200/300',
+      checkIn: new Date(),
+      checkOut: new Date(),
+    };
+    this.roomList.push(randomRoom);
+  }
+  deleteAll() {
+    this.roomList = [];
+  }
+  deleteRoom(roomNumber: number) {
+    this.roomList = this.roomList.filter(
+      (room) => room.roomNumber !== roomNumber
+    );
+  }
+
+  chnageRole() {
+    this.role === 'user' ? (this.role = 'admin') : (this.role = 'user');
   }
 }

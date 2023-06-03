@@ -1,9 +1,57 @@
 <h2>Welcome to {{ hotelName }}</h2>
 
-<div [hidden]="hideRooms" *ngIf="rooms.availableRooms > 0">
-  <h3 [innerText]="'Rooms: ' + rooms.availableRooms"></h3>
+<div [ngSwitch]="role">
+  <div *ngSwitchCase="'admin'">
+    <h3>Admin</h3>
+    <div [hidden]="hideRooms" *ngIf="rooms.availableRooms > 0">
+      <h3 [innerText]="'Rooms: ' + rooms.availableRooms"></h3>
+
+      <table>
+        <tr>
+          <th>Room Number</th>
+          <th>Room Type</th>
+          <th>Fasilities</th>
+          <th>Price</th>
+          <th>Check-in</th>
+          <th>Check-out</th>
+          <th>Even/Odd</th>
+          <th>Delete</th>
+        </tr>
+        <tr
+          *ngFor="
+            let item of roomList;
+            let e = even;
+            let o = odd;
+            let i = index
+          "
+          [ngClass]="e ? 'even' : 'odd'"
+        >
+          <td>{{ e ? "Even" : "Odd" }}</td>
+          <td>{{ item.roomNumber }}</td>
+          <td>{{ item.roomType }}</td>
+          <td>{{ item.amenties }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.checkIn | date }}</td>
+          <td>{{ item.checkOut | date }}</td>
+          <td><button (click)="deleteRoom(item.roomNumber)">Delete</button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div *ngSwitchCase="'user'">
+    <h3>User</h3>
+  </div>
+  <div *ngSwitchDefault>
+    <h3>Guest</h3>
+  </div>
 </div>
 
 <button (click)="toggle()">{{ hideRooms ? "Show" : "Hide" }}</button>
-
-<button (click)="book()">Book</button>
+<br />
+<button (click)="addRoom()">Add Room</button>
+<br />
+<button (click)="deleteAll()">Delete All</button>
+<br />
+<button (click)="chnageRole()">
+  {{ role === "user" ? "login as admin" : "login as user" }}
+</button>
